@@ -14,19 +14,13 @@ const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const fetchUserByEmail = async (email: string) => {
-    let page = 1;
-    let totalPages = 1;
-    
+
+const fetchUserByEmail = async (email: string) => {
     try {
-      while (page <= totalPages) {
-        const response = await axios.get(`https://reqres.in/api/users?page=${page}`);
-        totalPages = response.data.total_pages;
-        const user = response.data.data.find((user: any) => user.email === email);
-        if (user) return user;
-        page++;
-      }
-      throw new Error('User not found');
+      const response = await axios.get(`https://reqres.in/api/users?per_page=12`);
+      const user = response.data.data.find((u: any) => u.email === email);
+      if (!user) throw new Error('User not found');
+      return user;
     } catch (error) {
       throw new Error('Failed to fetch user data');
     }
@@ -58,6 +52,11 @@ const SignIn = () => {
       let errorMessage = 'Login failed';
       if (axios.isAxiosError(error)) {
         errorMessage = error.response?.data?.error || errorMessage;
+        
+          if (errorMessage.toLowerCase().includes('password')) {
+                  errorMessage = 'Invalid password';
+               }
+            
       } else if (error instanceof Error) {
         errorMessage = error.message;
       }

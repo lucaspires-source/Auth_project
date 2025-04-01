@@ -33,6 +33,10 @@ const SignUp = () => {
       return false;
     }
     
+      if (password.length < 6) {
+            setError('Password must be at least 6 characters');
+            return false;
+          }
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return false;
@@ -50,39 +54,36 @@ const SignUp = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-
+  
     if (!validateForm()) {
       setIsLoading(false);
       return;
     }
-
+  
     try {
-      // Registration API call
-      const response = await axios.post('https://reqres.in/api/register', {
-        email,
-        password
-      });
-
-      // Create user object with form data and API response
-      const user = {
-        id: response.data.id,
+      // Mock registration flow
+      const mockResponse = {
+        data: {
+          id: Date.now(), // Generate temporary ID
+          token: 'QpwL5tke4Pnpja7X4', // Static token from Reqres
+        }
+      };
+  
+      // Create user object from form data
+      const mockUser = {
+        id: mockResponse.data.id,
         first_name: firstName,
         last_name: lastName,
         email: email,
-        avatar: '' // Add default avatar or generate from initials
+        avatar: `https://i.pravatar.cc/150?u=${email}`
       };
-
-      // Log user in with the received token and created user
-      login(response.data.token, user);
+  
+      // Store in context and localStorage
+      login(mockResponse.data.token, mockUser);
       
-      // Redirect to dashboard
       navigate('/');
     } catch (error) {
-      let errorMessage = 'Registration failed';
-      if (axios.isAxiosError(error)) {
-        errorMessage = error.response?.data?.error || errorMessage;
-      }
-      setError(errorMessage);
+      setError('Registration failed - please try different credentials');
     } finally {
       setIsLoading(false);
     }
