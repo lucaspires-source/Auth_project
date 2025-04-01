@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-route
 import { AuthProvider, useAuth } from "./AuthContext";
 import Dashboard from "./Components/Dashboard";
 import { ThemeProvider } from "./ThemeContext";
+import SignIn from "./Components/SignIn";
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <ThemeProvider >
       <BrowserRouter>
         <Routes>
-         {/* <Route path="/login" element={<SignIn />} /> */}
+          <Route path="/login" element={<SignIn />} />
           {/*<Route path="/register" element={<SignUp />} />  */}
           <Route
             path="/"
