@@ -1,10 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider, useAuth } from "./AuthContext";
 import Dashboard from "./Components/Dashboard";
+import { ThemeProvider } from "./ThemeContext";
 
 function App() {
   return (
     <AuthProvider>
+      <ThemeProvider >
       <BrowserRouter>
         <Routes>
          {/* <Route path="/login" element={<SignIn />} /> */}
@@ -19,6 +21,8 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+      </ThemeProvider>
+
     </AuthProvider>
   );
 }
