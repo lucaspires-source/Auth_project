@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from "./AuthContext";
 import Dashboard from "./Components/Dashboard";
 import { ThemeProvider } from "./ThemeContext";
 import SignIn from "./Components/SignIn";
+import SignUp from "./Components/SignUp";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<SignIn />} />
-          {/*<Route path="/register" element={<SignUp />} />  */}
+          <Route path="/register" element={<SignUp/>} /> 
           <Route
             path="/"
             element={
@@ -27,6 +28,8 @@ function App() {
     </AuthProvider>
   );
 }
+
+export default App
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { token } = useAuth();
